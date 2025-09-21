@@ -1,13 +1,19 @@
-const getAllUsers = (req,res) => {
-    const data = {
-        id : '1',
-        name : "mumu",
-        email : "mumu@email.com"
-    }
+const usersModel = require('../models/users.js');
+
+const getAllUsers = async (req, res) => {
+    try {
+        const [data]  = await usersModel.getAllUsers();
     res.json({
         message: 'GET semua users berhasil',
         data: data
-    })
+            })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server Error',
+            serverMessage: error
+        })
+        
+    }
 };
 
 const createNewUser = (req, res) => {
@@ -32,9 +38,7 @@ const deleteUser = (req, res) => {
     res.json({
         message: 'DELETE user berhasil',
         data:{
-            id: id,
-            name: "Margaery",
-            email: "mumu@email.com"
+            
         }
     })
 }
