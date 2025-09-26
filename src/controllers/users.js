@@ -4,7 +4,7 @@ const getAllUsers = async (req, res) => {
     try {
         const [data]  = await usersModel.getAllUsers();
     res.json({
-        message: 'GET semua users berhasil',
+        message: 'GET semua data users berhasil',
         data: data
             })
     } catch (error) {
@@ -15,6 +15,22 @@ const getAllUsers = async (req, res) => {
         
     }
 };
+
+const getUser = async (req, res) => {
+    const {id} = req.params;
+    try {
+       const [data] = await usersModel.getUser(id);
+        res.json ({
+            message: 'GET data User berhasil',
+            data: data [0]
+        })
+    } catch (error) {
+       res.status(500).json({
+            message: 'Server Error',
+            serverMessage: error
+        })  
+    }
+}
 
 const createNewUser = async (req, res) => {
     const {body} = req;
@@ -73,6 +89,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     getAllUsers,
+    getUser,
     createNewUser,
     updateUser,
     deleteUser
